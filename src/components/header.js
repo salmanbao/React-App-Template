@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import { generateFromString } from 'generate-avatar';
 import { Navbar, Nav, Form, FormControl, Button } from 'react-bootstrap';
 
-const Header = ({ drizzle: { web3 } }) => {
+const Header = ({ wallet }) => {
     useEffect(() => {
         async function setAvatar() {
 
@@ -29,16 +29,18 @@ const Header = ({ drizzle: { web3 } }) => {
                 </Form>
                 <Nav>
                     <Nav.Link href="#home">Browser</Nav.Link>
-                    <Nav.Link href="#link">Account</Nav.Link>
-                    <Nav.Link href="#link"><img
-                        alt=""
-                        src={`data:image/svg+xml;utf8,${generateFromString(web3.givenProvider.selectedAddress)}`}
-                        // src={user}
-                        width="50"
-                        height="30"
-                        className="d-inline-block align-top"
-                    /></Nav.Link>
-
+                    {wallet &&
+                        <>
+                            <Nav.Link href="#link"><img
+                                alt=""
+                                src={`data:image/svg+xml;utf8,${generateFromString('hello world')}`}
+                                // src={user}
+                                width="50"
+                                height="30"
+                                className="d-inline-block align-top"
+                            /></Nav.Link>
+                        </>
+                    }
                 </Nav>
 
 

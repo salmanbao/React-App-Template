@@ -1,57 +1,38 @@
-import Web3 from "web3";
 import React, { useEffect } from "react";
-import { OpenSeaPort, Network } from 'opensea-js'
-import { useDispatch, connect } from 'react-redux'
-import { Button } from "react-bootstrap";
-import ExampleActions from './stores/example/action'
-import { firstFive } from './stores/example/selector'
+import { useDispatch ,connect} from 'react-redux';
+import { EthereumActions } from './stores/ethereum/action'
+import HomeContainer from './containers/homeContainer';
 
-
-const provider = new Web3.providers.HttpProvider('https://rinkeby.infura.io/v3/2f8da807a28b4b8b925f520dd58b1b5a')
-const seaport = new OpenSeaPort(provider, {
-  networkName: Network.Rinkeby,
-  // apiBaseUrl:'https://rinkeby.infura.io/v3',
-  // apiKey:'2f8da807a28b4b8b925f520dd58b1b5a'
-})
-
-const App = (props) => {
-
+const App = ({ contractAddress}) => {
   const dispatch = useDispatch()
-
   useEffect(() => {
     async function prefetch() {
-      dispatch(ExampleActions.fetchUsers())
+      dispatch(EthereumActions.setupWeb3())
     }
-
     prefetch()
-  },[])
+  }, [dispatch])
 
   return (
-    <Button
-      variant="primary"
-      onClick={() => {
-        console.log(props.five)
-      }}>
-      Button
-    </Button>
+    <HomeContainer />
   );
 }
 
 const mapStateToProps = (state) => {
   return {
-    five: firstFive(state)
+    contractAddress: state.ethereum.contractAddress !== undefined ? state.ethereum.contractAddress : undefined
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getFiveUsers: () => {
-      console.log('dispatch function')
-    }
-  }
-}
+// const mapDispatchToProps = (dispatch) => {
+//     return {
+//         getFiveUsers: () => {
+//             console.log('dispatch function')
+//         }
+//     }
+// }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+export default connect(mapStateToProps, null)(App);
+
 
 // ------- MyCollectible ---------
 

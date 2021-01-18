@@ -5,5 +5,5 @@ const { Types, Creators } = createActions({
     saveUsers:['users'],
 })
 
-export const ExampleTypes = Types
-export default Creators
+export const ExampleTypes = Types;
+export default Creators;
